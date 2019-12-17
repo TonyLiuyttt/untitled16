@@ -9,12 +9,13 @@ import pylab
 from shutil import copyfile
 
 pylab.rcParams['figure.figsize'] = (8.0, 10.0)
-
-dataDir='/home/kylefan/data/coco/train2017'#需要改动地址
-newdataDir='/home/kylefan/data/coco/mydataset/2cat/'
+Z = zipfile.ZipFile(f'{root}/annotations/stuff_annotations_trainval2017.zip')
+Z = zipfile.ZipFile(f'{root}/images/train2017.zip')
+dataDir='/data/coco/image/train2017'#需要改动地址
+newdataDir='/data/coco/target_image/2cat/'
 dataType='train2017'
 #annFile='{}/annotations/instances_{}.json'.format(dataDir,dataType)
-annFile='/home/kylefan/data/coco/annotations_trainval2017/annotations/instances_train2017.json'.format(dataDir,dataType)
+annFile='/data/coco/annotations/stuff_annotations_trainval2017.json'.format(dataDir,dataType)
 
 # initialize COCO api for instance annotations
 coco=COCO(annFile)
@@ -27,8 +28,8 @@ nms = set([cat['supercategory'] for cat in cats])
 print('COCO supercategories: \n{}'.format(' '.join(nms)))
 
 # get all images containing given categories
-catIds = coco.getCatIds(catNms=['cat']);
-imgIds = coco.getImgIds(catIds=catIds );#list in int
+catIds = coco.getCatIds(catNms=['cat'])
+imgIds = coco.getImgIds(catIds=catIds )#list in int
 
 imgs=coco.loadImgs(imgIds)
 #print len(imgs)
